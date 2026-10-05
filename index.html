@@ -6,14 +6,12 @@
     <title>gotdamnartists</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Sugra / Brutalismus Geo-Schriftart + Mono für den kleinen Text -->
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #000000;
             --text-color: #ffffff;
             --text-silver: #a6a6a6;
-            --text-muted: #666666;
         }
 
         * {
@@ -28,146 +26,143 @@
             height: 100vh;
             background-color: var(--bg-color);
             color: var(--text-color);
+            font-family: 'Space Mono', monospace;
             overflow: hidden;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            padding-left: 8vw;
+            justify-content: center;
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        /* Kleiner Text in der ersten Zeile */
-        .sub-header {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.85rem;
-            text-transform: lowercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-        }
-
-        /* "müde amelie" interaktiver Link */
-        .amelie-link {
-            color: var(--text-color);
-            cursor: pointer;
-            text-decoration: underline;
-            transition: color 0.2s ease;
-        }
-
-        .amelie-link:hover {
-            color: var(--text-silver);
-        }
-
-        h1 {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(2.5rem, 6.5vw, 6rem);
-            line-height: 1.05;
-            text-transform: uppercase;
-            letter-spacing: -0.04em;
-            color: var(--text-color);
-        }
-
-        /* "artists" Link */
-        span.artists-link {
-            cursor: pointer;
-            text-decoration: underline;
-            text-underline-offset: 10px;
-            text-decoration-thickness: 4px;
-            transition: color 0.3s ease;
-        }
-
-        /* Wachsender Gähn-Emoji Effekt */
-        .giant-yawn {
+        /* Die sich ständig bewegende Raupe quer über den Bildschirm */
+        .caterpillar {
             position: fixed;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.2);
-            font-size: 15rem;
-            opacity: 0;
-            z-index: 1000;
-            pointer-events: none;
-            transition: transform 1.2s cubic-bezier(0.1, 1, 0.3, 1), opacity 1.2s ease;
+            font-size: 3rem;
+            cursor: pointer;
+            z-index: 100;
+            user-select: none;
+            animation: crawlAndWiggle 12s linear infinite;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+            transition: transform 0.1s;
         }
 
-        .giant-yawn.grow {
-            transform: translate(-50%, -50%) scale(3.5);
-            opacity: 1;
+        .caterpillar:hover {
+            transform: scale(1.3);
         }
 
-        /* Süße Ameisenstraße Animation */
-        .ant-parade {
-            position: fixed;
-            top: 50%;
-            left: -300px;
-            transform: translateY(-50%);
-            font-size: 3.5rem;
-            white-space: nowrap;
-            z-index: 999;
-            pointer-events: none;
-            display: none;
-            letter-spacing: 1.5rem;
-        }
-
-        @keyframes marchAcross {
+        @keyframes crawlAndWiggle {
             0% {
-                left: -300px;
+                left: -150px;
+                transform: translateY(-50%) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-70%) rotate(-10deg);
+            }
+            50% {
+                transform: translateY(-30%) rotate(10deg);
+            }
+            75% {
+                transform: translateY(-60%) rotate(-5deg);
             }
             100% {
                 left: 105vw;
+                transform: translateY(-50%) rotate(0deg);
             }
         }
 
-        .ant-parade.animate {
-            display: block;
-            animation: marchAcross 2.2s linear forwards;
+        /* Popups / Textboxen kreuz und quer auf dem Bildschirm */
+        .message-box {
+            position: fixed;
+            background: #000000;
+            border: 2px solid #ffffff;
+            padding: 1.5rem 2rem;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            z-index: 200;
+            display: none;
+            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .clickable-heart {
+            font-size: 2.5rem;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .clickable-heart:hover {
+            transform: scale(1.3);
+        }
+
+        .final-message {
+            position: fixed;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            text-transform: uppercase;
+            z-index: 300;
+            display: none;
+            text-align: center;
+            animation: popIn 0.4s ease forwards;
+            letter-spacing: -0.02em;
         }
     </style>
 </head>
 <body>
 
-    <!-- Wachsender Gähn-Emoji -->
-    <div class="giant-yawn" id="giantYawn">🥱</div>
+    <!-- Die sich bewegende Raupe -->
+    <div class="caterpillar" id="caterpillar" title="Fangk mich!">🐛🐛🐛</div>
 
-    <!-- Ameisenstraße die quer durch den Bildschirm läuft -->
-    <div class="ant-parade" id="antParade">🐜 🐜 🐜 🐜 🐜 🐜 🐜</div>
+    <!-- Erste Nachricht nach Klick auf Raupe -->
+    <div class="message-box" id="box1" style="top: 25%; left: 15%;">
+        Fight Club-Call nicht vergessen!<br>
+        <span class="clickable-heart" id="heart1">❤️</span>
+    </div>
 
-    <!-- Hero / Startpage Content -->
-    <div class="hero-content">
-        <div class="sub-header">diese seite wurde nicht von der <span class="amelie-link" id="amelieTrigger">müden amelie</span> erstellt</div>
-        <h1>
-            this isnt for ants, <br>
-            this is for <span class="artists-link" id="artist-trigger">artists</span>
-        </h1>
+    <!-- Finale Liebeserklärung (wird kreuz und quer platziert) -->
+    <div class="final-message" id="finalMsg">
+        Love you ❤️❤️❤️
     </div>
 
     <script>
-        // Klick auf "müde amelie": Gähn-Emoji wird riesig
-        document.getElementById('amelieTrigger').addEventListener('click', function() {
-            const yawn = document.getElementById('giantYawn');
-            yawn.classList.add('grow');
+        const caterpillar = document.getElementById('caterpillar');
+        const box1 = document.getElementById('box1');
+        const heart1 = document.getElementById('heart1');
+        const finalMsg = document.getElementById('finalMsg');
 
-            // Nach der Animation wieder zurücksetzen
-            setTimeout(function() {
-                yawn.classList.remove('grow');
-            }, 1300);
+        // Wenn man die Raupe anklickt
+        caterpillar.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Raupe verschwindet
+            caterpillar.style.display = 'none';
+            
+            // Erste Box erscheint zufällig kreuz und quer auf dem Bildschirm
+            const randomTop = Math.floor(Math.random() * 60) + 15; // Zwischen 15% und 75%
+            const randomLeft = Math.floor(Math.random() * 60) + 10; // Zwischen 10% und 70%
+            box1.style.top = randomTop + '%';
+            box1.style.left = randomLeft + '%';
+            box1.style.display = 'block';
         });
 
-        // Klick auf "artists": Wort wird silber und Ameisen marschieren
-        document.getElementById('artist-trigger').addEventListener('click', function() {
-            this.style.color = 'var(--text-silver)';
-            
-            const parade = document.getElementById('antParade');
-            parade.classList.add('animate');
+        // Wenn man auf das erste Herz klickt
+        heart1.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Erste Box ausblenden
+            box1.style.display = 'none';
 
-            setTimeout(function() {
-                parade.classList.remove('animate');
-            }, 2300);
+            // Finale Nachricht erscheint auch an einer zufälligen, kreuz und queren Position
+            const randomTop2 = Math.floor(Math.random() * 60) + 20;
+            const randomLeft2 = Math.floor(Math.random() * 50) + 20;
+            finalMsg.style.top = randomTop2 + '%';
+            finalMsg.style.left = randomLeft2 + '%';
+            finalMsg.style.display = 'block';
         });
     </script>
 
