@@ -6,7 +6,7 @@
     <title>gotdamnartists</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Sugra-nahe, ultra-geometrische & kantige Brutalismus-Schriftarten -->
+    <!-- Sugra / Brutalismus Geo-Schriftart -->
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -22,7 +22,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            border-radius: 0 !important; /* Erzwungene harte Kanten im Brutalismus-Stil */
+            border-radius: 0 !important; /* Harte Kanten */
         }
 
         body, html {
@@ -31,60 +31,42 @@
             color: var(--text-color);
             font-family: 'Space Mono', monospace;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        /* Hero Sektion mit harten Kanten */
+        /* Hero Sektion - Linksbündig & Minimalistisch */
         .hero {
             position: relative;
             width: 100%;
             height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            /* Standardmäßig zentriert, ändert sich per JS bei Klick auf "ants" auf linksbündig */
-            text-align: center;
-            padding: 4rem;
-            background-image: 
-                radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.98) 85%),
-                url('https://images.unsplash.com/photo-1534567153574-2b12153a87f0?q=80&w=2000&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            border-bottom: 4px solid var(--text-color);
-            transition: text-align 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            justify-content: flex-start;
+            text-align: left;
+            padding: 0 8vw;
+            background-color: var(--bg-color);
+            border-bottom: 2px solid var(--border-color);
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 1100px;
-            width: 100%;
+            max-width: 1200px;
         }
 
         h1 {
             font-family: 'Archivo Black', sans-serif;
             font-size: clamp(2.5rem, 6.5vw, 6rem);
-            line-height: 0.95;
+            line-height: 1.05;
             text-transform: uppercase;
             letter-spacing: -0.04em;
             color: #ffffff;
-            transition: color 0.4s ease;
-        }
-
-        /* Interaktives "ants" Element */
-        #ants-trigger {
-            cursor: pointer;
-            display: inline-block;
-            transition: color 0.3s ease;
-        }
-
-        #ants-trigger:hover {
-            opacity: 0.8;
         }
 
         /* "artists" Link */
         h1 span.artists-link {
             text-decoration: underline;
-            text-underline-offset: 8px;
+            text-underline-offset: 10px;
             text-decoration-thickness: 4px;
             cursor: pointer;
             transition: opacity 0.2s ease;
@@ -92,6 +74,34 @@
 
         h1 span.artists-link:hover {
             opacity: 0.6;
+        }
+
+        /* Süße Ameisenstraße Animation */
+        .ant-parade {
+            position: fixed;
+            top: 50%;
+            left: -250px;
+            transform: translateY(-50%);
+            font-size: 3.5rem;
+            white-space: nowrap;
+            z-index: 999;
+            pointer-events: none;
+            display: none;
+            letter-spacing: 1.5rem;
+        }
+
+        @keyframes marchAcross {
+            0% {
+                left: -250px;
+            }
+            100% {
+                left: 105vw;
+            }
+        }
+
+        .ant-parade.animate {
+            display: block;
+            animation: marchAcross 2.2s linear forwards;
         }
 
         /* Hauptinhalt / Galerie Bereich */
@@ -119,7 +129,7 @@
             letter-spacing: -0.02em;
         }
 
-        /* Upload Box mit harten Kanten */
+        /* Upload Box */
         .upload-box {
             background: var(--card-bg);
             border: 2px solid var(--text-color);
@@ -222,7 +232,7 @@
             color: var(--text-muted);
         }
 
-        /* Kontakt Sektion mit harten Kanten */
+        /* Kontakt Sektion */
         .contact-section {
             max-width: 900px;
             margin: 0 auto 10rem auto;
@@ -300,15 +310,30 @@
             letter-spacing: 0.15em;
             text-transform: uppercase;
         }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 0 6vw;
+            }
+            .container {
+                padding: 4rem 2rem;
+            }
+            .contact-section {
+                padding: 3rem 2rem;
+            }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Ameisenstraße die bei Klick quer über den Bildschirm läuft -->
+    <div class="ant-parade" id="antParade">🐜 🐜 🐜 🐜 🐜 🐜 🐜</div>
+
     <!-- Hero Sektion -->
-    <section class="hero" id="heroSection">
-        <div class="hero-content" id="heroContent">
+    <section class="hero">
+        <div class="hero-content">
             <h1>
-                this isnt for <span id="ants-trigger">ants</span>, <br>
+                this isnt for ants, <br>
                 this is for <span class="artists-link" id="artist-trigger">artists</span>
             </h1>
         </div>
@@ -320,7 +345,7 @@
             <div>
                 <h2 class="section-title">projekte & künstler</h2>
             </div>
-            <!-- Upload-Box für eigene Bilder -->
+            <!-- Upload-Box -->
             <label class="upload-box">
                 <input type="file" id="imageUploader" accept="image/*">
                 <div class="upload-btn-text">+ projekt hochladen</div>
@@ -390,20 +415,20 @@
     </footer>
 
     <script>
-        // Klick auf "ants": Text wird silber und springt hart linksbündig
-        document.getElementById('ants-trigger').addEventListener('click', function(e) {
-            e.stopPropagation();
-            const hero = document.getElementById('heroSection');
-            const content = document.getElementById('heroContent');
-            
-            hero.style.textAlign = 'left';
-            hero.style.paddingLeft = '8vw';
-            this.style.color = '#a6a6a6';
-        });
-
-        // Klick auf "artists": Smooth scroll zum Galerie-Bereich
+        // Klick auf "artists": Ameisenstraße läuft los, danach scrollt es zur Galerie
         document.getElementById('artist-trigger').addEventListener('click', function() {
-            document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
+            const parade = document.getElementById('antParade');
+            parade.classList.add('animate');
+
+            // Nach knapp einer Sekunde (wenn die Ameisen in der Mitte sind) smooth zur Galerie scrollen
+            setTimeout(function() {
+                document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
+            }, 800);
+
+            // Nach Ende der Animation die Klasse wieder entfernen, damit man es nochmal machen kann
+            setTimeout(function() {
+                parade.classList.remove('animate');
+            }, 2500);
         });
 
         // Eigene Bilder hochladen und als Projektkarte hinzufügen
