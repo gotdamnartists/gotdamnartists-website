@@ -6,13 +6,14 @@
     <title>gotdamnartists</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Sugra / Brutalismus Geo-Schriftart -->
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    <!-- Sugra / Brutalismus Geo-Schriftart + Mono für den kleinen Text -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #000000;
             --text-color: #ffffff;
             --text-silver: #a6a6a6;
+            --text-muted: #666666;
         }
 
         * {
@@ -27,7 +28,6 @@
             height: 100vh;
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'Archivo Black', sans-serif;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -38,9 +38,34 @@
         .hero-content {
             position: relative;
             z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Kleiner Text in der ersten Zeile */
+        .sub-header {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: lowercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        /* "müde amelie" interaktiver Link */
+        .amelie-link {
+            color: var(--text-color);
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.2s ease;
+        }
+
+        .amelie-link:hover {
+            color: var(--text-silver);
         }
 
         h1 {
+            font-family: 'Archivo Black', sans-serif;
             font-size: clamp(2.5rem, 6.5vw, 6rem);
             line-height: 1.05;
             text-transform: uppercase;
@@ -55,6 +80,24 @@
             text-underline-offset: 10px;
             text-decoration-thickness: 4px;
             transition: color 0.3s ease;
+        }
+
+        /* Wachsender Gähn-Emoji Effekt */
+        .giant-yawn {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.2);
+            font-size: 15rem;
+            opacity: 0;
+            z-index: 1000;
+            pointer-events: none;
+            transition: transform 1.2s cubic-bezier(0.1, 1, 0.3, 1), opacity 1.2s ease;
+        }
+
+        .giant-yawn.grow {
+            transform: translate(-50%, -50%) scale(3.5);
+            opacity: 1;
         }
 
         /* Süße Ameisenstraße Animation */
@@ -88,11 +131,15 @@
 </head>
 <body>
 
+    <!-- Wachsender Gähn-Emoji -->
+    <div class="giant-yawn" id="giantYawn">🥱</div>
+
     <!-- Ameisenstraße die quer durch den Bildschirm läuft -->
     <div class="ant-parade" id="antParade">🐜 🐜 🐜 🐜 🐜 🐜 🐜</div>
 
     <!-- Hero / Startpage Content -->
     <div class="hero-content">
+        <div class="sub-header">diese seite wurde nicht von der <span class="amelie-link" id="amelieTrigger">müden amelie</span> erstellt</div>
         <h1>
             this isnt for ants, <br>
             this is for <span class="artists-link" id="artist-trigger">artists</span>
@@ -100,15 +147,24 @@
     </div>
 
     <script>
+        // Klick auf "müde amelie": Gähn-Emoji wird riesig
+        document.getElementById('amelieTrigger').addEventListener('click', function() {
+            const yawn = document.getElementById('giantYawn');
+            yawn.classList.add('grow');
+
+            // Nach der Animation wieder zurücksetzen
+            setTimeout(function() {
+                yawn.classList.remove('grow');
+            }, 1300);
+        });
+
+        // Klick auf "artists": Wort wird silber und Ameisen marschieren
         document.getElementById('artist-trigger').addEventListener('click', function() {
-            // Wort wird silber
             this.style.color = 'var(--text-silver)';
             
-            // Ameisen laufen los
             const parade = document.getElementById('antParade');
             parade.classList.add('animate');
 
-            // Nach der Animation Ameisen zurücksetzen
             setTimeout(function() {
                 parade.classList.remove('animate');
             }, 2300);
