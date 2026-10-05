@@ -4,17 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>gotdamnartists</title>
-    <!-- Google Fonts: Syne & Space Mono für den kommunistischen Brutalismus-Look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #080808;
-            --text-color: #f4f4f4;
-            --accent-color: #ff2200;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -24,105 +17,52 @@
         body, html {
             width: 100%;
             height: 100vh;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: #080808;
+            color: #f4f4f4;
             font-family: 'Space Mono', monospace;
-            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
-        /* Hero Container mit Makro-Ameise und Blitzlicht-Vignette */
         .hero {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             text-align: center;
             padding: 2rem;
-            /* Hintergrund: Makro-Ameise auf Boden mit Blitzlicht-Optik & dunkler Vignettierung */
-            background-image: 
-                radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(8,8,8,0.95) 85%),
-                url('https://images.unsplash.com/photo-1534567153574-2b12153a87f0?q=80&w=2000&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* Rotes Blitzlicht-Glow im Hintergrund */
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            background: rgba(255, 34, 0, 0.12);
-            filter: blur(100px);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
         }
 
         h1 {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
-            font-size: clamp(2.2rem, 5.5vw, 5.5rem);
-            line-height: 1.05;
+            font-size: clamp(2rem, 5vw, 5rem);
+            line-height: 1.1;
             text-transform: lowercase;
             letter-spacing: -0.03em;
             color: #ffffff;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
         h1 span {
-            color: var(--text-color);
-            transition: color 0.3s ease, text-shadow 0.3s ease;
             cursor: pointer;
-            display: inline-block;
-            position: relative;
+            transition: color 0.2s ease;
         }
 
-        /* Der "artists"-Link Effekt */
         h1 span:hover {
-            color: var(--accent-color);
-            text-shadow: 0 0 25px rgba(255, 34, 0, 0.6);
-        }
-
-        /* Kleiner dezenter Hinweis darunter */
-        .hint {
-            margin-top: 2rem;
-            font-size: 0.8rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.4);
+            color: #ff2200;
         }
     </style>
 </head>
 <body>
 
     <section class="hero">
-        <div class="hero-content">
-            <h1>
-                this isnt for ants, <br>
-                this is for <span id="artist-trigger">artists</span>
-            </h1>
-            <div class="hint">[ system active ]</div>
-        </div>
+        <h1>
+            this isnt for ants,<br>
+            this is for <span id="artist-trigger">artists</span>
+        </h1>
     </section>
 
     <script>
-        // Klick auf "artists" (kann später erweitert werden, wenn du auf eine neue Seite weiterleiten willst)
         document.getElementById('artist-trigger').addEventListener('click', function() {
             alert('Hier geht es bald zu den Künstlern!');
-            // Später kannst du hier z.B. einleiten: window.location.href = 'galerie.html';
         });
     </script>
 
