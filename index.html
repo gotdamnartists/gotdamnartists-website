@@ -6,20 +6,23 @@
     <title>gotdamnartists</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Sugra-nahe, ultra-geometrische & kantige Brutalismus-Schriftarten -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #050505;
-            --card-bg: #111111;
+            --bg-color: #000000;
+            --card-bg: #0a0a0a;
             --text-color: #ffffff;
-            --text-muted: #888888;
-            --border-color: #333333;
+            --text-silver: #a6a6a6;
+            --text-muted: #666666;
+            --border-color: #262626;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            border-radius: 0 !important; /* Erzwungene harte Kanten im Brutalismus-Stil */
         }
 
         body, html {
@@ -30,7 +33,7 @@
             scroll-behavior: smooth;
         }
 
-        /* Hero Sektion */
+        /* Hero Sektion mit harten Kanten */
         .hero {
             position: relative;
             width: 100%;
@@ -38,80 +41,97 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            /* Standardmäßig zentriert, ändert sich per JS bei Klick auf "ants" auf linksbündig */
             text-align: center;
-            padding: 2rem;
+            padding: 4rem;
             background-image: 
-                radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(5,5,5,0.98) 90%),
+                radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.98) 85%),
                 url('https://images.unsplash.com/photo-1534567153574-2b12153a87f0?q=80&w=2000&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 4px solid var(--text-color);
+            transition: text-align 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 1000px;
+            max-width: 1100px;
+            width: 100%;
         }
 
         h1 {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: clamp(2.5rem, 6vw, 6rem);
-            line-height: 1.05;
-            text-transform: lowercase;
-            letter-spacing: -0.03em;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2.5rem, 6.5vw, 6rem);
+            line-height: 0.95;
+            text-transform: uppercase;
+            letter-spacing: -0.04em;
             color: #ffffff;
+            transition: color 0.4s ease;
         }
 
-        h1 span {
-            color: #ffffff;
+        /* Interaktives "ants" Element */
+        #ants-trigger {
+            cursor: pointer;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        #ants-trigger:hover {
+            opacity: 0.8;
+        }
+
+        /* "artists" Link */
+        h1 span.artists-link {
             text-decoration: underline;
+            text-underline-offset: 8px;
+            text-decoration-thickness: 4px;
             cursor: pointer;
             transition: opacity 0.2s ease;
         }
 
-        h1 span:hover {
-            opacity: 0.7;
+        h1 span.artists-link:hover {
+            opacity: 0.6;
         }
 
         /* Hauptinhalt / Galerie Bereich */
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 6rem 2rem;
+            padding: 8rem 4rem;
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 3rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1.5rem;
+            margin-bottom: 4rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 2rem;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .section-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-transform: lowercase;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
         }
 
-        /* Upload Button Sektion */
+        /* Upload Box mit harten Kanten */
         .upload-box {
             background: var(--card-bg);
-            border: 2px dashed var(--border-color);
-            padding: 1.5rem 2rem;
+            border: 2px solid var(--text-color);
+            padding: 1.5rem 2.5rem;
             text-align: center;
             cursor: pointer;
-            transition: border-color 0.2s;
+            transition: background 0.2s, color 0.2s;
         }
 
         .upload-box:hover {
-            border-color: #ffffff;
+            background: var(--text-color);
+            color: var(--bg-color);
         }
 
         .upload-box input {
@@ -119,42 +139,41 @@
         }
 
         .upload-btn-text {
+            font-family: 'Archivo Black', sans-serif;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: var(--text-color);
         }
 
-        /* Grid für Künstler & Projekte */
+        /* Grid für Projekte */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 3rem;
         }
 
         .card {
             background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--border-color);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            transition: transform 0.2s ease;
+            transition: border-color 0.2s ease;
         }
 
         .card:hover {
-            transform: translateY(-4px);
-            border-color: #666;
+            border-color: var(--text-color);
         }
 
         .card-img-wrapper {
             width: 100%;
-            height: 260px;
-            background-color: #1a1a1a;
+            height: 300px;
+            background-color: #050505;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            position: relative;
+            border-bottom: 2px solid var(--border-color);
         }
 
         .card-img-wrapper img {
@@ -170,113 +189,115 @@
         }
 
         .comic-ant-placeholder {
-            font-size: 4rem;
+            font-size: 5rem;
             user-select: none;
         }
 
         .card-body {
-            padding: 1.5rem;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 1rem;
             flex-grow: 1;
         }
 
         .artist-name {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 700;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            text-transform: uppercase;
         }
 
         .project-title {
-            font-size: 0.95rem;
-            color: var(--text-muted);
+            font-size: 1rem;
+            color: var(--text-silver);
         }
 
         .card-footer {
             margin-top: auto;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border-color);
             font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
             color: var(--text-muted);
         }
 
-        /* Kontakt Sektion */
+        /* Kontakt Sektion mit harten Kanten */
         .contact-section {
-            max-width: 800px;
-            margin: 0 auto 8rem auto;
-            padding: 4rem 2rem;
+            max-width: 900px;
+            margin: 0 auto 10rem auto;
+            padding: 5rem 4rem;
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--text-color);
         }
 
         .contact-section h2 {
-            font-family: 'Syne', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            text-transform: lowercase;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .form-group label {
             display: block;
             font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
-            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            margin-bottom: 0.8rem;
+            color: var(--text-silver);
+            font-weight: 700;
         }
 
         .form-control {
             width: 100%;
             background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            padding: 1rem;
+            border: 2px solid var(--border-color);
+            padding: 1.2rem;
             color: var(--text-color);
             font-family: 'Space Mono', monospace;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
 
         .form-control:focus {
             outline: none;
-            border-color: #ffffff;
+            border-color: var(--text-color);
         }
 
         textarea.form-control {
             resize: vertical;
-            min-height: 120px;
+            min-height: 140px;
         }
 
         .submit-btn {
-            background: #ffffff;
-            color: #000000;
-            border: none;
-            padding: 1rem 2rem;
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
+            background: var(--text-color);
+            color: var(--bg-color);
+            border: 2px solid var(--text-color);
+            padding: 1.2rem 2.5rem;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: background 0.2s, color 0.2s;
         }
 
         .submit-btn:hover {
-            opacity: 0.8;
+            background: var(--bg-color);
+            color: var(--text-color);
         }
 
-        /* Minimalistischer Footer */
+        /* Footer */
         footer {
-            border-top: 1px solid var(--border-color);
-            padding: 3rem 2rem;
+            border-top: 2px solid var(--border-color);
+            padding: 4rem 2rem;
             text-align: center;
             font-size: 0.8rem;
             color: var(--text-muted);
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
         }
     </style>
@@ -284,11 +305,11 @@
 <body>
 
     <!-- Hero Sektion -->
-    <section class="hero" id="top">
-        <div class="hero-content">
+    <section class="hero" id="heroSection">
+        <div class="hero-content" id="heroContent">
             <h1>
-                this isnt for ants, <br>
-                this is for <span id="artist-trigger">artists</span>
+                this isnt for <span id="ants-trigger">ants</span>, <br>
+                this is for <span class="artists-link" id="artist-trigger">artists</span>
             </h1>
         </div>
     </section>
@@ -302,21 +323,19 @@
             <!-- Upload-Box für eigene Bilder -->
             <label class="upload-box">
                 <input type="file" id="imageUploader" accept="image/*">
-                <div class="upload-btn-text">+ eigenes projekt hochladen</div>
+                <div class="upload-btn-text">+ projekt hochladen</div>
             </label>
         </div>
 
-        <!-- Galerie Grid mit Comic-Ameisen als Platzhalter -->
+        <!-- Grid mit Comic-Ameisen als Platzhalter -->
         <div class="grid" id="projectGrid">
-            <!-- Beispiel-Karten -->
             <div class="card">
                 <div class="card-img-wrapper">
-                    <!-- Cute Comic Ameise als Platzhalter -->
                     <div class="comic-ant-placeholder">🐜</div>
                 </div>
                 <div class="card-body">
-                    <div class="artist-name">[Künstlername 1]</div>
-                    <div class="project-title">Projekt: Monolithische Skulptur</div>
+                    <div class="artist-name">Künstlername 01</div>
+                    <div class="project-title">Projekt: Monolithischer Beton</div>
                     <div class="card-footer">Medium: Installation</div>
                 </div>
             </div>
@@ -326,9 +345,9 @@
                     <div class="comic-ant-placeholder">🐜</div>
                 </div>
                 <div class="card-body">
-                    <div class="artist-name">[Künstlername 2]</div>
-                    <div class="project-title">Projekt: Brutalistische Fotografie</div>
-                    <div class="card-footer">Medium: Analog / Schwarz-Weiß</div>
+                    <div class="artist-name">Künstlername 02</div>
+                    <div class="project-title">Projekt: Analoges Blitzlicht</div>
+                    <div class="card-footer">Medium: Fotografie</div>
                 </div>
             </div>
 
@@ -337,8 +356,8 @@
                     <div class="comic-ant-placeholder">🐜</div>
                 </div>
                 <div class="card-body">
-                    <div class="artist-name">[Künstlername 3]</div>
-                    <div class="project-title">Projekt: Konstruktivismus in Öl</div>
+                    <div class="artist-name">Künstlername 03</div>
+                    <div class="project-title">Projekt: Konstruktivismus</div>
                     <div class="card-footer">Medium: Malerei</div>
                 </div>
             </div>
@@ -365,18 +384,29 @@
         </form>
     </section>
 
-    <!-- Footer (Keine Social Media Links) -->
+    <!-- Footer -->
     <footer>
         <p>&copy; gotdamnartists. alle rechte vorbehalten.</p>
     </footer>
 
     <script>
-        // Smooth scroll zum Galerie-Bereich beim Klick auf "artists"
+        // Klick auf "ants": Text wird silber und springt hart linksbündig
+        document.getElementById('ants-trigger').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const hero = document.getElementById('heroSection');
+            const content = document.getElementById('heroContent');
+            
+            hero.style.textAlign = 'left';
+            hero.style.paddingLeft = '8vw';
+            this.style.color = '#a6a6a6';
+        });
+
+        // Klick auf "artists": Smooth scroll zum Galerie-Bereich
         document.getElementById('artist-trigger').addEventListener('click', function() {
             document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // Eigene Bilder hochladen und direkt als Projektkarte hinzufügen
+        // Eigene Bilder hochladen und als Projektkarte hinzufügen
         document.getElementById('imageUploader').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -388,25 +418,24 @@
                     newCard.className = 'card';
                     newCard.innerHTML = `
                         <div class="card-img-wrapper">
-                            <img src="${e.target.result}" alt="Hochgeladenes Projekt">
+                            <img src="${e.target.result}" alt="Eigenes Projekt">
                         </div>
                         <div class="card-body">
                             <div class="artist-name">Neuer Künstler</div>
-                            <div class="project-title">Projekt: Eigenes Werk</div>
-                            <div class="card-footer">Medium: Upload</div>
+                            <div class="project-title">Projekt: Upload</div>
+                            <div class="card-footer">Medium: Eigenes Werk</div>
                         </div>
                     `;
-                    // Fügt das Bild ganz oben ein
                     grid.prepend(newCard);
                 }
                 reader.readAsDataURL(file);
             }
         });
 
-        // Einfaches Feedback beim Absenden des Kontaktformulars
+        // Kontaktformular Absenden
         function handleContact(event) {
             event.preventDefault();
-            alert('Danke für deine Nachricht! Wir haben sie erhalten.');
+            alert('Nachricht erfolgreich übermittelt.');
             event.target.reset();
         }
     </script>
